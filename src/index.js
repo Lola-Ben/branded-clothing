@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
+import ShopPage from './pages/ShopPage/shop.component'
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <App/>,
     errorElement: <div>404 NOT FOUND</div>
+  },
+  {
+    path: "/shop",
+    element: <ShopPage />
   },
   {
     path: "/shop/hats",
