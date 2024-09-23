@@ -5,28 +5,26 @@ import './index.css';
 import App from './App';
 import ShopPage from './pages/ShopPage/shop.component'
 import reportWebVitals from './reportWebVitals';
+import Header from './components/header/header.component';
+import ErrorPage from './pages/errorPage/errorPage.component';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const HatsPage = () => {
-  return (<div>
-    <h1>Hats Page</h1>
-  </div>)
-}
  
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App/>,
-    errorElement: <div>404 NOT FOUND</div>
-  },
-  {
-    path: "/shop",
-    element: <ShopPage />
-  },
-  {
-    path: "/shop/hats",
-    element: <HatsPage />,
+    element: <Header  />,
+    children: [
+          {
+            path: "/",
+            element: <App/>,
+            errorElement:<ErrorPage />
+          },
+          {
+            path: "/shop",
+            element: <ShopPage />
+          }
+    ]
   }
 ])
 
