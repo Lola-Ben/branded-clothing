@@ -6,7 +6,8 @@ import App from './App';
 import ShopPage from './pages/ShopPage/shop.component'
 import reportWebVitals from './reportWebVitals';
 import Header from './components/header/header.component';
-import ErrorPage from './pages/errorPage/errorPage.component';
+import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
+// import ErrorPage from './pages/errorPage/errorPage.component';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -18,11 +19,15 @@ const router = createBrowserRouter([
           {
             path: "/",
             element: <App/>,
-            errorElement:<ErrorPage />
+            // errorElement:<ErrorPage />
           },
           {
             path: "/shop",
             element: <ShopPage />
+          },
+          {
+            path: '/sign',
+            element: <SignInAndSignUp />
           }
     ]
   }
