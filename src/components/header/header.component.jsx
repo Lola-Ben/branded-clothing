@@ -1,5 +1,5 @@
 import React from 'react';
-import {ReactComponent as Logo } from '../../asset/logo.svg';
+import {ReactComponent as Logo } from '../../asset/crown.svg';
 import {Link, Outlet} from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils';
 import { signOut } from 'firebase/auth';
@@ -17,13 +17,11 @@ const Header = ({currentUser}) => (
           {
           currentUser ? 
             <div className='option' onClick={() => {signOut(auth)
-                console.log("Sign out click")
             }}>SIGN OUT</div>
             :
             <Link className='option' to='/signIn'>SIGN IN</Link>
             }
         </div>
-        <p>{currentUser ? currentUser.displayName : "No user yet"}</p>
     </div>
     <Outlet/>
    </>
