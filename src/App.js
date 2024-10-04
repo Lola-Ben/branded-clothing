@@ -5,6 +5,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Header from './components/header/header.component';
 import ShopPage from './pages/ShopPage/shop.component';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
+import { createUserProfileDocument } from './firebase/firebase.utils';
+import { getDoc } from 'firebase/firestore';
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 class App extends React.Component {
 
@@ -15,24 +17,29 @@ class App extends React.Component {
 
   componentDidMount(){
     const auth = getAuth();
-     this.unsubcribeFromAuth =  onAuthStateChanged(auth, user => {
-        this.setState({currentUser: user})
+     this.unsubcribeFromAuth =  onAuthStateChanged(auth, async userAuth => {
+     if(userAuth) { 
+       const userRef =  await createUserProfileDocument(userAuth);
+
+      const userSnapShot = getDoc(userRef)
+      this.setState({
+        currentUser: {
+          id: (await userSnapShot).id,
+          ...(await userSnapShot).data()
+        }
+      })
+      }else {
+        this.setState({currentUser: userAuth})
+      }
+
       })
 
-  }
-  
-  user = () => {
-      console.log(this.state.currentUser)     
-      return  this.state.currentUser 
   }
   
   componentWilUnmount(){
       this.unsubcribeFromAuth();
   }
 
-
-
- 
 
   render(){
     const router = createBrowserRouter([
