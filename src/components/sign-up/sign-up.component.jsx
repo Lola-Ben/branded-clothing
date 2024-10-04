@@ -93,7 +93,7 @@ export default class SignUp extends React.Component{
                         label="confirmPassword"
                         required
                         />
-                        <CustomButton isGoogleSignIn >Sign Up</CustomButton>
+                        <CustomButton >Sign Up</CustomButton>
                     </form> 
                 </div>
             )
