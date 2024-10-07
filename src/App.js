@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css';
 import HomePage from './pages/homepage/homepage.component';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter,  RouterProvider } from 'react-router-dom';
 import Header from './components/header/header.component';
 import ShopPage from './pages/ShopPage/shop.component';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
@@ -45,6 +45,8 @@ class App extends React.Component {
       this.unsubcribeFromAuth();
   }
 
+  
+
 
   render(){
     const router = createBrowserRouter([
@@ -63,6 +65,7 @@ class App extends React.Component {
               {
                 path: '/signin',
                 element: <SignInAndSignUp />
+              
               }
         ]
       },
@@ -77,9 +80,13 @@ class App extends React.Component {
  
 }
 
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser
+})
+
 const mapDispatchToProps = dispatch => ({
        setCurrentUser: user => dispatch(setCurrentUser(user))
 })
 
 
-export default connect(null,mapDispatchToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(App);
