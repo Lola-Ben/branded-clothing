@@ -1,15 +1,21 @@
 import React from 'react'
-import './App.css';
-import HomePage from './pages/homepage/homepage.component';
 import { createBrowserRouter,  RouterProvider } from 'react-router-dom';
-import Header from './components/header/header.component';
+import {getAuth, onAuthStateChanged} from 'firebase/auth'
+import { getDoc } from 'firebase/firestore';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
 import ShopPage from './pages/ShopPage/shop.component';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
+import HomePage from './pages/homepage/homepage.component';
+import CheckoutPage from './pages/checkout/checkout.component';
+
+
+import './App.css';
+import Header from './components/header/header.component';
 import { createUserProfileDocument } from './firebase/firebase.utils';
-import { getDoc } from 'firebase/firestore';
-import {getAuth, onAuthStateChanged} from 'firebase/auth'
-import { connect } from 'react-redux';
 import setCurrentUser from './reducer/user/user.action'
+import selectCurrentUser from './reducer/user/user.selectors';
 
 
 
@@ -66,6 +72,11 @@ class App extends React.Component {
                 path: '/signin',
                 element: <SignInAndSignUp />
               
+              },
+              {
+                path: '/checkout',
+                element: <CheckoutPage />
+
               }
         ]
       },
@@ -80,8 +91,8 @@ class App extends React.Component {
  
 }
 
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
 })
 
 const mapDispatchToProps = dispatch => ({

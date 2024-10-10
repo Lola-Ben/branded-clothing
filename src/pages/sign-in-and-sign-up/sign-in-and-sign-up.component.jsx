@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+
 import './sign-in-and-sign-up.styles.scss';
 import SignIn from '../../components/sign-in/sign-in.component.';
 import SignUp from '../../components/sign-up/sign-up.component';
-import { connect } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import selectCurrentUser from '../../reducer/user/user.selectors';
 
 
 const SignInAndSignUp = ({currentUser}) => {
@@ -19,7 +22,7 @@ const SignInAndSignUp = ({currentUser}) => {
         )
     }
 }
-const mapStateToProps = state => ({
-    currentUser: state.user.currentUser
+const mapStateToProps =  createStructuredSelector({
+    currentUser: selectCurrentUser
 })
 export default connect(mapStateToProps)(SignInAndSignUp);
