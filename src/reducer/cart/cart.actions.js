@@ -8,4 +8,14 @@ export const addItem = (user) => ({
     type: cartActiontypes.ADD_ITEM,
     payload: user
 })
+
+export const removeItem = item => ({
+    type: cartActiontypes.REMOVE_ITEM,
+    payload: item
+})
+
+export const clearItemFromCart = (item) => ({
+    type: cartActiontypes.CLEAR_ITEM_FROM_CART,
+    payload: item,
+})
 export default cartAction;
