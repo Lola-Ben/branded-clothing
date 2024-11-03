@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './menu-item.styles.scss';
+
+
+import { MenuItemContainer, BackgroundImageContainer, ContentContainer, ContentTitle, ContentSubtitle } from './menu-item.styles';
 
 
 const MenuItem = ({title, imageUrl, size, linkUrl }) =>  {
@@ -8,13 +10,13 @@ const MenuItem = ({title, imageUrl, size, linkUrl }) =>  {
     let navigate = useNavigate();
 
    return (
-        <div className={`${size} menu-item`} onClick={ () => { navigate(`${linkUrl}`)} }>
-                <div className='background-image'  style={{backgroundImage: `url(${imageUrl})`}} />
-                <div  className="content">
-                    <h1 className="title">{title.toUpperCase()}</h1>
-                    <span className="subtitle">Shop Now</span>
-                </div>
-        </div>
+        <MenuItemContainer size={size} onClick={ () => { navigate(`${linkUrl}`)} }>
+                <BackgroundImageContainer className='background-image'  $imageUrl={imageUrl} />
+                <ContentContainer  className="content">
+                    <ContentTitle >{title.toUpperCase()}</ContentTitle>
+                    <ContentSubtitle >Shop Now</ContentSubtitle>
+                </ContentContainer>
+        </MenuItemContainer>
 
 )
 };

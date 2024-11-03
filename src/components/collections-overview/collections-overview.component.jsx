@@ -5,18 +5,20 @@ import { createStructuredSelector } from "reselect";
 import selectCollections from "../../reducer/shop/shop.selector";
 import CollectionPreview from "../collection-preview/collection-preview.component";
 
-import "./collections-overview.styles.scss"
+import { CollectionOverViewContiner } from "./collections-overview.styles";
+
 
 const CollectionOverView = ({collections}) => {
-    collections = Object.keys(collections).map(key => collections[key]);
+    collections = collections ? Object.keys(collections).map(key => collections[key]) : [];
+    console.log(collections)
     return (
-    <div className='collection-overview'>
+    <CollectionOverViewContiner >
     {
        collections.map(({id, ...otherCollectionProps}) => (
        <CollectionPreview key={id} {...otherCollectionProps} />                    
        ))
     }
-    </div>
+    </CollectionOverViewContiner>
 )}
 
 const mapStateToProps = createStructuredSelector({

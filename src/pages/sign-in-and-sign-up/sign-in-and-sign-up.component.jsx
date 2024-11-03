@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
-import './sign-in-and-sign-up.styles.scss';
 import SignIn from '../../components/sign-in/sign-in.component.';
 import SignUp from '../../components/sign-up/sign-up.component';
 import selectCurrentUser from '../../reducer/user/user.selectors';
+import {SignInAndSignUpContainer} from "./sign-in-and-sign-up.styles"
 
 
 const SignInAndSignUp = ({currentUser}) => {
@@ -14,11 +14,11 @@ const SignInAndSignUp = ({currentUser}) => {
         return <Navigate to="/" />;
     } else {
         return( 
-        <div className='sign-in-and-sign-up'>
+        <SignInAndSignUpContainer >
            
             <SignIn />
             <SignUp />
-        </div>
+        </SignInAndSignUpContainer>
         )
     }
 }

@@ -8,7 +8,10 @@ const selectCollections = createSelector(
     shop => shop.collections
 )
 
-
+export const selectCategory = createSelector(
+    [selectCollections],
+    categories => categories ? Object.entries(categories) : []
+)
 
 
 

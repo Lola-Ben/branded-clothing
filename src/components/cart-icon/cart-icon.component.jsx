@@ -6,16 +6,17 @@ import {ReactComponent as ShoppingIcon} from "../../asset/122 shopping-bag.svg"
 import toggleCartHidden from "../../reducer/cart/cart.actions"
 import selectCartItemsCount from "../../reducer/cart/cart.selectors";
 
-import "./cart-icon.styles.scss";
+
+import { CartIconContainer, ItemCountContainer } from "./cart-icon.styles";
 
 const CartIcon = ({toggleCartHidden, itemCount}) => {
     return (
-    <div className="cart-icon" onClick={toggleCartHidden}>
+    <CartIconContainer onClick={toggleCartHidden}>
         <ShoppingIcon className="shopping-icon" />
-        <span className="item-count">{
+        <ItemCountContainer>{
         itemCount
-        }</span>
-    </div>
+        }</ItemCountContainer>
+    </CartIconContainer>
 )}
 
 const mapDispatchToProps = dispatch => ({
