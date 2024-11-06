@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import {getAuth, GoogleAuthProvider, signInWithPopup} from 'firebase/auth';
+import {getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged} from 'firebase/auth';
 import { getFirestore, setDoc, getDocs, doc, query, collection, writeBatch } from "firebase/firestore";
 
 
@@ -22,29 +22,17 @@ export const auth = getAuth(firebaseApp);
 export const firestore = getFirestore(firebaseApp)
 
 
-const provider = new GoogleAuthProvider();
+export const googleProvider = new GoogleAuthProvider();
 
-provider.setCustomParameters({prompt: 'select_account'});
+googleProvider.setCustomParameters({prompt: 'select_account'});
 export const signInWithGoogle = async() =>  {
   try { 
-    await signInWithPopup(auth, provider)
+    await signInWithPopup(auth, googleProvider)
   }catch (error) {
     console.log("Error logging in with google popup:" + error.messsage );
   }
 }
 
-
-export const createCollectionAndDocuments = async (collectionName, collectionItem) => {
-   const collectionRef = collection(firestore, collectionName)
-   const batch = writeBatch(firestore)
-   collectionItem.forEach(obj => {
-      const newDocRef = doc(collectionRef)    
-      batch.set(newDocRef, obj)
-   });
-
-  return await batch.commit()
-   
-}
 
 export const createUserProfileDocument =  async (userAuth, additionalData) => {
   if(!userAuth) return ;
@@ -62,6 +50,18 @@ export const createUserProfileDocument =  async (userAuth, additionalData) => {
   return userRef;
 }
 
+export const createCollectionAndDocuments = async (collectionName, collectionItem) => {
+  const collectionRef = collection(firestore, collectionName)
+  const batch = writeBatch(firestore)
+  collectionItem.forEach(obj => {
+     const newDocRef = doc(collectionRef)    
+     batch.set(newDocRef, obj)
+  });
+
+ return await batch.commit()
+  
+}
+
 export  const getCollectionsAndDocuments = async () => {
   const collectionsRef = collection(firestore, "collections")
   const q = query(collectionsRef)
@@ -77,6 +77,19 @@ export  const getCollectionsAndDocuments = async () => {
     }
   })
   return transformCollection
+}
+
+export const SignOut = () => {
+  signOut(auth)
+}
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+         const unsubscribe =  onAuthStateChanged(auth, userAuth => {
+           unsubscribe();
+           resolve(userAuth);
+         }, reject)
+  })
 }
 
 export default firebaseApp;

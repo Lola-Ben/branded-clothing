@@ -10,7 +10,6 @@ import { CollectionOverViewContiner } from "./collections-overview.styles";
 
 const CollectionOverView = ({collections}) => {
     collections = collections ? Object.keys(collections).map(key => collections[key]) : [];
-    console.log(collections)
     return (
     <CollectionOverViewContiner >
     {

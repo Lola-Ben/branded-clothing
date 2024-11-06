@@ -1,19 +1,24 @@
+
 import React from "react";
 import { useParams } from "react-router";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { connect } from "react-redux";
 
-import selectCategory from "../../reducer/shop/shop.selector";
+import {selectCollections} from "../../reducer/shop/shop.selector";
 import CollectionItem from "../../components/collection-item/collection-item.component";
 import { CollectionItemContainer, CollectionPageContainer,  CollectionTitle } from "./collection.styles";
 
 
 
-const CollectionPage = () => { 
+const CollectionPage = ({collections}) => { 
     const {categoryId} = useParams();
-    let categories = useSelector( state => selectCategory(state));
+    collections = collections ? Object.keys(collections).map(key => collections[key]) : null
+    collections = collections.filter(collection => collection["routeName"] === categoryId)
     
-    const category =  categories.find(cat => cat["routeName"] === categoryId)
-    const { items, title} = category
+  
+    collections = collections[0]
+    const {items, title} = collections
     return(
         <CollectionPageContainer className="category-page">
             <CollectionTitle className="title">{title.toUpperCase()}</CollectionTitle>
@@ -30,6 +35,10 @@ const CollectionPage = () => {
 }
 
 
+const mapStateToProps = createStructuredSelector({
+  collections: selectCollections  
+})
 
 
-export default CollectionPage;
+
+export default connect(mapStateToProps)(CollectionPage);
