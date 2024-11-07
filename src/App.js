@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createBrowserRouter,  RouterProvider } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 
 import Header from './components/header/header.component';
 import ShopPage from './pages/ShopPage/shop.component';
@@ -11,31 +10,16 @@ import CheckoutPage from './pages/checkout/checkout.component';
 
 
 import './App.css';
-import selectCurrentUser from './reducer/user/user.selectors';
 import { checkUserSession } from './reducer/user/user.action';
 
 
 
 
-class App extends React.Component {
+const App = ({checkUserSession}) => {
 
- 
-   unsubcribeFromAuth = null
-
-  componentDidMount(){
-    const {checkUserSession} = this.props;
-    checkUserSession();
-
-  }
-  
-  componentWilUnmount(){
-      this.unsubcribeFromAuth();
-  }
-
-  
-
-
-  render(){
+    useEffect(() => {
+      checkUserSession()
+    }, [checkUserSession]) 
     const router = createBrowserRouter([
       {
         element: <Header  />,
@@ -70,19 +54,11 @@ class App extends React.Component {
       </div>
     );
   }
- 
-}
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
- 
 
-})
-
-const mapDispatchToProps = dispatch =>({
+ const mapDispatchToProps = dispatch =>({
   checkUserSession: () => dispatch(checkUserSession())
 })
 
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
