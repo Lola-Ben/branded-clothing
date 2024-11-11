@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { createBrowserRouter,  RouterProvider } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Header from './components/header/header.component';
 import ShopPage from './pages/ShopPage/shop.component';
@@ -15,11 +15,13 @@ import { checkUserSession } from './reducer/user/user.action';
 
 
 
-const App = ({checkUserSession}) => {
+const App = () => {
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
-      checkUserSession()
-    }, [checkUserSession]) 
+      dispatch(checkUserSession())
+    }, [dispatch]) 
     const router = createBrowserRouter([
       {
         element: <Header  />,
@@ -56,9 +58,7 @@ const App = ({checkUserSession}) => {
   }
 
 
- const mapDispatchToProps = dispatch =>({
-  checkUserSession: () => dispatch(checkUserSession())
-})
 
 
-export default connect(null, mapDispatchToProps)(App);
+
+export default (App);
