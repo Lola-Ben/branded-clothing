@@ -11,13 +11,13 @@ const StripeCheckoutButton = ({price}) => {
             url: "payment",
             method: "post",
             data: {
-                amount: publishabelKey,
+                amount: priceForStrip,
                 token
             }
         }).then(res =>{
-            alert("Payment successfully")
+            alert("Payment successful")
         }).catch(error =>{
-         console.log("Payment error:", JSON.parse(error))
+         console.log("Payment error: " + error)
          alert("There is an issue with your payment. Please sure you use the provided test credit card")
         });
     }
